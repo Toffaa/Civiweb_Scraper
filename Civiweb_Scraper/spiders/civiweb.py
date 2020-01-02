@@ -7,8 +7,8 @@ import dateparser
 class CiviwebSpider(scrapy.Spider):
     name = 'civiweb'
     allowed_domains = ['civiweb.com']
-    first_job = 127293
-    last_job = 133902
+    first_job = 120000
+    last_job = 140000
 
     def start_requests(self):
         for i in range(self.first_job, self.last_job):
@@ -16,11 +16,10 @@ class CiviwebSpider(scrapy.Spider):
 
     def parse(self, response):
         offer_details = {}
+        offer_details['URL'] = response.request.url
 
         ## MAIN BAR
         offer_details['Reference'] = response.xpath('//*[@id="ContenuPrincipal_BlocA1_m_oVIM"]/text()').get()
-        if offer_details['Reference'] is "N/A":
-            return 
         offer_details['Title'] = response.xpath('//*[@id="ContenuPrincipal_BlocA1_m_oTitle"]/text()').get()
 
         ## HEADER
